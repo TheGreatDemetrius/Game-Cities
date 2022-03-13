@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Города</string>
+    <string name="bot_won">РОБОТ ПОБЕДИЛ</string>
+    <string name="city_has_already_been">Город %1$s уже был</string>
+    <string name="enter_city">Введите город</string>
+    <string name="enter_existing_city">Введите существующий город</string>
+    <string name="former_name">%1$s - прежнее название российского города %2$s</string>
+    <string name="get_hint">Получить подсказку</string>
+    <string name="i_do_not_know_such_city">Я не знаю такой город</string>
+    <string name="is_country">%1$s - это страна</string>
+    <string name="missing_stars">Не хватает %1$d ★</string>
+    <string name="no">Нет</string>
+    <string name="once_again">ЕЩЁ РАЗ</string>
+    <string name="record">ВАШ РЕКОРД: %1$d ★</string>
+    <string name="score">ВАШ СЧЁТ: %1$s ★</string>
+    <string name="seconds">%1$s сек.</string>
+    <string name="spend_stars_on_hint">Потратить %1$d ★ на подсказку?</string>
+    <string name="the_city_must_begin_with_letter">Город должен начинаться на букву \"%1$s\"</string>
+    <string name="using_hint">Использование подсказки</string>
+    <string name="winner_icon">Изображение победителя</string>
+    <string name="yes">Да</string>
+    <string name="you_won">ВЫ ПОБЕДИЛИ</string>
+    <string name="zero">0</string>
+</resources>
