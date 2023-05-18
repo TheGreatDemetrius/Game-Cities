@@ -1,0 +1,240 @@
+body {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  color: white;
+  letter-spacing: 3px;
+  font-size: 1.5em;
+  background: radial-gradient(circle at bottom left, transparent 25%, rgba(255, 255, 255, 0.03) 25.5%, rgba(255, 255, 255, 0.03) 36%, transparent 37%, transparent 100%), radial-gradient(circle at top right, transparent 34%, rgba(255, 255, 255, 0.03) 34.5%, rgba(255, 255, 255, 0.03) 45.5%, transparent 46%, transparent 100%);
+  background-size: 6em 6em;
+  animation: color 30s infinite linear;
+}
+
+.container {
+  width: 100%;
+  max-width: 1355px;
+  margin: auto;
+  padding: 48px;
+  display: flex;
+}
+
+.title {
+  display: flex;
+}
+
+.logo {
+  width: 50px;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+  letter-spacing: 6px;
+  font-weight: bold;
+  margin-left: 24px;
+}
+
+p {
+  margin-top: 48px;
+  line-height: 2;
+}
+
+.buttons {
+  margin-top: 58px;
+  display: flex;
+}
+
+.download {
+  padding: 0 32px;
+  background-image: linear-gradient(135deg, #60B8F1, #2D9CE4);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+  display: block;
+  line-height: 80px;
+  color: white;
+  text-decoration: none;
+  border-radius: 32px;
+  text-align: center;
+}
+
+.download:hover {
+  transform: scale(1.03)
+}
+
+.download:active {
+  transform: scale(.97)
+}
+
+.icon {
+  width: 16px;
+}
+
+.github {
+  height: 80px;
+  width: 80px;
+  display: block;
+  margin-left: 32px;
+  background-image: url("github.svg"), linear-gradient(135deg, #698CF3, #3864E6);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  align-items: flex-end;
+}
+
+.github:hover {
+  transform: scale(1.03)
+}
+
+.github:active {
+  transform: scale(.97)
+}
+
+.smartphone {
+  margin-left: 64px;
+  width: 300px;
+  filter: drop-shadow(0px 10px 10px black);
+}
+
+@keyframes color {
+  0% {
+    background-color: #337EE5;
+  }
+
+  20% {
+    background-color: #2AB0E3;
+  }
+
+  50% {
+    background-color: #3B56E7;
+  }
+
+  80% {
+    background-color: #2AB0E3;
+  }
+
+  100% {
+    background-color: #337EE5;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .smartphone {
+    content: url("smartphone-dark.png")
+  }
+}
+
+@media (max-width: 1380px) {
+  body {
+    font-size: 1.3em;
+  }
+
+  .smartphone {
+    margin-left: 55px;
+    width: 280px;
+  }
+
+  p {
+    margin-top: 38px;
+    line-height: 1.9;
+  }
+
+  .buttons {
+    margin-top: 48px;
+  }
+
+  .logo {
+    width: 45px;
+  }
+
+  .download {
+    line-height: 70px;
+  }
+
+  .github {
+    height: 70px;
+    width: 70px;
+  }
+}
+
+@media (max-width: 1040px) {
+  body {
+    font-size: 1.1em;
+  }
+
+  .smartphone {
+    width: 260px;
+  }
+
+  .buttons {
+    margin-top: 38px;
+  }
+
+  p {
+    margin-top: 28px;
+    line-height: 1.8;
+  }
+
+  .logo {
+    width: 40px;
+  }
+
+  .download {
+    line-height: 60px;
+  }
+
+  .github {
+    height: 60px;
+    width: 60px;
+  }
+}
+
+@media (max-width: 840px) {
+  body {
+    font-size: 0.9em;
+  }
+
+  .smartphone {
+    width: 240px;
+  }
+
+  .buttons {
+    margin-top: 28px;
+  }
+
+  p {
+    margin-top: 18px;
+    line-height: 1.7;
+  }
+
+  .logo {
+    width: 35px;
+  }
+
+  .download {
+    line-height: 50px;
+  }
+
+  .github {
+    height: 50px;
+    width: 50px;
+  }
+}
+
+@media (max-width: 740px) {
+  .smartphone {
+    display: none;
+  }
+}
+
+@media (max-width: 440px) {
+  .buttons {
+    display: block;
+  }
+
+  .github {
+    margin-top: 24px;
+    margin-left: auto;
+    margin-right: auto
+  }
+}
