@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Города</string>
+    <string name="bot_won">РОБОТ ПОБЕДИЛ</string>
+    <string name="city_has_already_been">Город %1$s уже был</string>
+    <string name="city_must_begin_with_letter">Город должен начинаться на букву \"%1$s\"</string>
+    <string name="enter_city">Введите город</string>
+    <string name="enter_existing_city">Введите существующий город</string>
+    <string name="get_hint">Получить подсказку</string>
+    <string name="i_do_not_know_such_city">Я не знаю такой город</string>
+    <string name="is_capital">%1$s — столица %2$s</string>
+    <string name="is_city">%1$s — город %2$s</string>
+    <string name="is_state">%1$s — государство %2$s</string>
+    <string name="missing_stars">Не хватает %1$d ★</string>
+    <string name="no">Нет</string>
+    <string name="once_again">ЕЩЁ РАЗ</string>
+    <string name="purpose_message">Основная цель игры — набрать как можно больше ★.
+        Если у вас достаточно ★, то вы можете получить подсказку, нажав на изображение лампы.
+        После каждой вашей победы уровень робота возрастает.
+        До истечения времени успейте записать город в текстовое поле или воспользуйтесь голосовым вводом.</string>
+    <string name="purpose_ok">Начать игру</string>
+    <string name="purpose_title">Цель</string>
+    <string name="record">ВАШ РЕКОРД: %1$d ★</string>
+    <string name="request_rationale">Для возможности голосового ввода городов предоставьте запрашиваемое разрешение</string>
+    <string name="rules_message">Города — это игра, в которой участники поочередно называют реально существующий город, название которого начинается на последнюю букву предыдущего города.
+        Если название предыдущего города заканчивается на «ё», «ъ», «ы» или «ь», то необходимо назвать город на предпоследнюю букву.</string>
+    <string name="rules_ok">Ознакомиться с целью</string>
+    <string name="rules_title">Правила</string>
+    <string name="score">ВАШ СЧЁТ: %1$d ★</string>
+    <string name="seconds">%1$d сек.</string>
+    <string name="six">60 сек.</string>
+    <string name="spend_stars_on_hint">Потратить %1$d ★ на подсказку?</string>
+    <string name="using_hint">Использование подсказки</string>
+    <string name="winner_icon">Изображение победы</string>
+    <string name="yes">Да</string>
+    <string name="you_won">ВЫ ПОБЕДИЛИ</string>
+    <string name="zero">0</string>
+</resources>

@@ -1,0 +1,12 @@
+<resources>
+    <style name="Theme.GameCities" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorAccent">@color/blue</item>
+    </style>
+
+    <style name="Theme.GameCities.SplashScreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:letterSpacing="0.05"
+        android:text="@string/bot_won"
+        android:textColor="@color/darkBlue"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/darkBlue"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/tv_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/darkBlue"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/iv_winner_icon"
+        android:layout_width="match_parent"
+        android:layout_height="384dp"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/winner_icon"
+        android:src="@drawable/ic_bot_won" />
+
+    <Button
+        android:textColor="@color/white"
+        android:id="@+id/btn_replay"
+        android:backgroundTint="@color/blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:letterSpacing="0.1"
+        android:text="@string/once_again"
+        android:textSize="18sp" />
+
+</LinearLayout>
