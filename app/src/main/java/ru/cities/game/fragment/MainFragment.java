@@ -149,7 +149,7 @@ public class MainFragment extends Fragment {
             });
 
     private void checkPermission() {
-        if (!(context.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED))
+        if (!(context.checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED))
             requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO);
     }
 
