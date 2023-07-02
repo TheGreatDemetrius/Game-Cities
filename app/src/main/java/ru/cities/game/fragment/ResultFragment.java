@@ -19,6 +19,7 @@ public class ResultFragment extends Fragment {
     private Button btnReplay;
     private TextView tvScore, tvRecord, tvTitle;
     private ImageView ivWinnerIcon;
+    private int resId = R.raw.defeat;
 
     public ResultFragment() {
         super(R.layout.result_fragment);
@@ -33,7 +34,6 @@ public class ResultFragment extends Fragment {
         ivWinnerIcon = view.findViewById(R.id.iv_winner_icon);
         btnReplay = view.findViewById(R.id.btn_replay);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -41,15 +41,19 @@ public class ResultFragment extends Fragment {
         SharedPreferences prefs = requireActivity().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         tvScore.setText(getString(R.string.score, prefs.getInt("score", 0)));
         tvRecord.setText(getString(R.string.record, prefs.getInt("record", 0)));
-        int resId = R.raw.defeat;
+        btnReplay.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, MainFragment.class, null)
+                .commit());
         if (prefs.getBoolean("isVictory", false)) {
             resId = R.raw.victory;
             tvTitle.setText(getString(R.string.you_won));
             ivWinnerIcon.setImageResource(R.drawable.ic_user_won);
         }
-        btnReplay.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, MainFragment.class, null)
-                .commit());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         MediaPlayer.create(requireActivity(), resId).start();
     }
 }
