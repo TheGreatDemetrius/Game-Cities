@@ -46,6 +46,15 @@ import ru.cities.game.db.DatabaseHelper;
 public class MainFragment extends Fragment {
     private final boolean TEXT_FOUND = false;
     private final boolean TEXT_NOT_FOUND = true;
+    private final List<String> calledNameCities = new ArrayList<>();
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    initSpeechRecognizer();
+                    startListening();
+                } else
+                    showMessage(getString(R.string.request_rationale));
+            });
     private int level;
     private int score = 0;
     private int booster = 1;
@@ -63,7 +72,6 @@ public class MainFragment extends Fragment {
     private CityAdapter adapter;
     private DatabaseHelper databaseHelper;
     private TextToSpeech textToSpeech;
-    private final List<String> calledNameCities = new ArrayList<>();
     private SpeechRecognizer speechRecognizer;
     private Intent mSpeechRecognizerIntent;
     private AlertDialog alertDialog;
@@ -102,12 +110,74 @@ public class MainFragment extends Fragment {
     private final View.OnClickListener sendSpeakText = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (isNull(speechRecognizer))
-                checkPermission();
-            else
-                speechRecognizer.startListening(mSpeechRecognizerIntent);
+            if (!(context.checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED))
+                requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO);
+            else if (isNull(speechRecognizer)) {
+                initSpeechRecognizer();
+                startListening();
+            } else startListening();
         }
     };
+
+    private void startListening() {
+        lText.setEndIconDrawable(R.drawable.ic_mic_on);
+        speechRecognizer.startListening(mSpeechRecognizerIntent);
+    }
+
+    private void initSpeechRecognizer() {
+        mSpeechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
+        speechRecognizer.setRecognitionListener(new RecognitionListener() {
+            @Override
+            public void onReadyForSpeech(Bundle params) {
+            }
+
+            @Override
+            public void onBeginningOfSpeech() {
+            }
+
+            @Override
+            public void onRmsChanged(float rms) {
+            }
+
+            @Override
+            public void onBufferReceived(byte[] buffer) {
+            }
+
+            @Override
+            public void onEndOfSpeech() {
+                lText.setEndIconDrawable(R.drawable.ic_mic_off);
+            }
+
+            @Override
+            public void onError(int error) {
+                lText.setEndIconDrawable(R.drawable.ic_mic_off);
+            }
+
+            @Override
+            public void onResults(Bundle results) {
+                ArrayList<String> result = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+                if (!isNull(result)) {
+                    String text = result.get(0);
+                    if (text.length() < 26) {
+                        etText.setText(text);
+                        etText.setSelection(text.length());
+                        checkInput();
+                    } else showMessage(getString(R.string.speech_recognition_error));
+                }
+            }
+
+            @Override
+            public void onPartialResults(Bundle partialResults) {
+            }
+
+            @Override
+            public void onEvent(int eventType, Bundle params) {
+            }
+        });
+    }
 
     @Override
     public void onResume() {
@@ -138,73 +208,6 @@ public class MainFragment extends Fragment {
             if (status == TextToSpeech.SUCCESS)
                 textToSpeech.setLanguage(new Locale("ru"));
         });
-    }
-
-    final ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted)
-                    initSpeechRecognizer();
-                else
-                    showMessage(getString(R.string.request_rationale));
-            });
-
-    private void checkPermission() {
-        if (!(context.checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED))
-            requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO);
-    }
-
-    private void initSpeechRecognizer() {
-        mSpeechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
-        speechRecognizer.setRecognitionListener(new RecognitionListener() {
-            @Override
-            public void onReadyForSpeech(Bundle params) {
-            }
-
-            @Override
-            public void onBeginningOfSpeech() {
-                lText.setEndIconDrawable(R.drawable.ic_mic_on);
-            }
-
-            @Override
-            public void onRmsChanged(float rms) {
-            }
-
-            @Override
-            public void onBufferReceived(byte[] buffer) {
-            }
-
-            @Override
-            public void onEndOfSpeech() {
-                lText.setEndIconDrawable(R.drawable.ic_mic_off);
-            }
-
-            @Override
-            public void onError(int error) {
-            }
-
-            @Override
-            public void onResults(Bundle results) {
-                ArrayList<String> result = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-                if (!isNull(result)) {
-                    String text = result.get(0);
-                    etText.setText(text);
-                    etText.setSelection(text.length());
-                    checkInput();
-                }
-            }
-
-            @Override
-            public void onPartialResults(Bundle partialResults) {
-            }
-
-            @Override
-            public void onEvent(int eventType, Bundle params) {
-            }
-        });
-
     }
 
     @Override
@@ -347,8 +350,10 @@ public class MainFragment extends Fragment {
     private void botSendCity(City userCity) {
         if (booster > level)
             botSurrender();
+        int i = 0;
         do {
             botCity = databaseHelper.getRandomCity(userCity.getLastChar());
+            if (++i > 10) botSurrender();
         } while (calledNameCities.contains(botCity.getName()));
         botCity.setType(!userCity.getType());
         showCity(botCity);
