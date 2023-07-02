@@ -28,6 +28,7 @@
     <string name="score">ВАШ СЧЁТ: %1$d ★</string>
     <string name="seconds">%1$d сек.</string>
     <string name="six">60 сек.</string>
+    <string name="speech_recognition_error">Ошибка распознавания речи</string>
     <string name="spend_stars_on_hint">Потратить %1$d ★ на подсказку?</string>
     <string name="using_hint">Использование подсказки</string>
     <string name="winner_icon">Изображение победы</string>
