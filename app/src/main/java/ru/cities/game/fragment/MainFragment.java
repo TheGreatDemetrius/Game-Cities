@@ -223,8 +223,6 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onPause() {
-        if (score > prefs.getInt("record", 0))
-            prefs.edit().putInt("record", score).apply();
         if (!isNull(speechRecognizer))
             speechRecognizer.cancel();
         if (!isNull(textToSpeech))
@@ -433,15 +431,11 @@ public class MainFragment extends Fragment {
         lampOff = !lampOff;
     }
 
-    @Override
-    public void onDestroy() {
-        timer.cancel();
-        super.onDestroy();
-    }
-
     private void openResultFragment() {
         if (!isNull(alertDialog))
             alertDialog.dismiss();
+        if (score > prefs.getInt("record", 0))
+            prefs.edit().putInt("record", score).apply();
         prefs.edit().putInt("score", score).apply();
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, ResultFragment.class, null)
