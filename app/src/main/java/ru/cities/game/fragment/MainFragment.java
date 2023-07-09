@@ -208,6 +208,7 @@ public class MainFragment extends Fragment {
             if (status == TextToSpeech.SUCCESS)
                 textToSpeech.setLanguage(new Locale("ru"));
         });
+        textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     @Override
