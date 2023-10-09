@@ -76,7 +76,7 @@ public class MainFragment extends Fragment {
     private SpeechRecognizer speechRecognizer;
     private Intent mSpeechRecognizerIntent;
     private AlertDialog alertDialog;
-    private final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.send_msg);
+    private MediaPlayer mediaPlayer;
 
     public MainFragment() {
         super(R.layout.main_fragment);
@@ -200,6 +200,7 @@ public class MainFragment extends Fragment {
             prefs.edit().putBoolean(key, false).apply();
         }
         ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(etText, 0);
+        mediaPlayer = MediaPlayer.create(context, R.raw.send_msg);
     }
 
     @Override
