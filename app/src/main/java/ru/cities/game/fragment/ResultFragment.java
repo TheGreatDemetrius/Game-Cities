@@ -44,7 +44,7 @@ public class ResultFragment extends Fragment {
         btnReplay.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, MainFragment.class, null)
                 .commit());
-        if (prefs.getBoolean("isVictory", false)) {
+        if (prefs.getBoolean("victory", false)) {
             resId = R.raw.victory;
             tvTitle.setText(getString(R.string.you_won));
             ivWinnerIcon.setImageResource(R.drawable.ic_user_won);

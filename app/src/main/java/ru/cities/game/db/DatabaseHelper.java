@@ -43,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     myOutput.write(buffer, 0, length);
                 myOutput.flush();
             } catch (IOException e) {
-                Log.d("DatabaseHelper", e.getMessage());
+                Log.d("DatabaseHelper", "IOE", e);
             }
     }
 

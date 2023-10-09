@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -75,6 +76,7 @@ public class MainFragment extends Fragment {
     private SpeechRecognizer speechRecognizer;
     private Intent mSpeechRecognizerIntent;
     private AlertDialog alertDialog;
+    private final MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.send_msg);
 
     public MainFragment() {
         super(R.layout.main_fragment);
@@ -197,6 +199,7 @@ public class MainFragment extends Fragment {
                     .show();
             prefs.edit().putBoolean(key, false).apply();
         }
+        ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(etText, 0);
     }
 
     @Override
@@ -208,7 +211,6 @@ public class MainFragment extends Fragment {
             if (status == TextToSpeech.SUCCESS)
                 textToSpeech.setLanguage(new Locale("ru"));
         });
-        textToSpeech.speak("", TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     @Override
@@ -228,7 +230,18 @@ public class MainFragment extends Fragment {
             speechRecognizer.cancel();
         if (!isNull(textToSpeech))
             textToSpeech.stop();
+        if(!isNull(mediaPlayer))
+            mediaPlayer.release();
         super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        timer.cancel();
+        databaseHelper.close();
+        if(!isNull(mediaPlayer))
+            mediaPlayer.release();
+        super.onDestroy();
     }
 
     private TextWatcher setTextWatcher() {
@@ -342,7 +355,7 @@ public class MainFragment extends Fragment {
             showCity(userCity);
             addPoints();
             botSendCity(userCity);
-            playSound(R.raw.send_msg);
+            mediaPlayer.start();
         }
     }
 
@@ -371,8 +384,7 @@ public class MainFragment extends Fragment {
 
     private void botSurrender() {
         prefs.edit().putInt("level", level * 2).apply();
-        prefs.edit().putBoolean("isVictory", true).apply();
-        openResultFragment();
+        openResultFragment(true);
     }
 
     private final View.OnClickListener showHintUsageDialog = new View.OnClickListener() {
@@ -396,10 +408,6 @@ public class MainFragment extends Fragment {
         }
     };
 
-    private void playSound(int soundId) {
-        MediaPlayer.create(context, soundId).start();
-    }
-
     private void showMessage(String msg) {
         Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG).setAnchorView(lText).show();
     }
@@ -418,8 +426,7 @@ public class MainFragment extends Fragment {
             }
 
             public void onFinish() {
-                prefs.edit().putBoolean("isVictory", false).apply();
-                openResultFragment();
+                openResultFragment(false);
             }
         };
     }
@@ -432,13 +439,14 @@ public class MainFragment extends Fragment {
         lampOff = !lampOff;
     }
 
-    private void openResultFragment() {
+    private void openResultFragment(boolean isVictory) {
         if (!isNull(alertDialog))
             alertDialog.dismiss();
         if (score > prefs.getInt("record", 0))
             prefs.edit().putInt("record", score).apply();
         prefs.edit().putInt("score", score).apply();
-        requireActivity().getSupportFragmentManager().beginTransaction()
+        prefs.edit().putBoolean("victory", isVictory).apply();
+        getParentFragmentManager().beginTransaction()
                 .replace(R.id.container, ResultFragment.class, null)
                 .commitAllowingStateLoss();
     }
