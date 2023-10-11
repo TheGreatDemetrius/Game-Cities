@@ -41,7 +41,7 @@ public class ResultFragment extends Fragment {
         SharedPreferences prefs = requireActivity().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         tvScore.setText(getString(R.string.score, prefs.getInt("score", 0)));
         tvRecord.setText(getString(R.string.record, prefs.getInt("record", 0)));
-        btnReplay.setOnClickListener(v -> requireActivity().getSupportFragmentManager().beginTransaction()
+        btnReplay.setOnClickListener(v -> getParentFragmentManager().beginTransaction()
                 .replace(R.id.container, MainFragment.class, null)
                 .commit());
         if (prefs.getBoolean("victory", false)) {
