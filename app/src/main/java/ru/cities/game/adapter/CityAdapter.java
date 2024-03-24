@@ -45,7 +45,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MessageHolder>
         notifyItemInserted(cities.size());
     }
 
-    static class MessageHolder extends RecyclerView.ViewHolder {
+    public static class MessageHolder extends RecyclerView.ViewHolder {
         private final TextView tvOutgoing, tvIncoming;
 
         public MessageHolder(@NonNull View itemView) {

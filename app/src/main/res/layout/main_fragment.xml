@@ -5,6 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/iv_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/background"
+        android:scaleType="centerCrop" />
+
     <LinearLayout
         android:id="@+id/ll_action_bar"
         android:layout_width="match_parent"
@@ -75,12 +82,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/l_text_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:boxStrokeColor="@color/white"
         app:endIconDrawable="@drawable/ic_mic_off"
         app:endIconMode="custom"
         app:endIconTint="@null"
+        app:hintTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -92,9 +101,10 @@
             android:digits="абвгдеёëжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЭЮЯ- "
             android:hint="@string/enter_city"
             android:imeOptions="actionSend"
-            android:inputType="textPersonName|textCapWords"
+            android:inputType="textCapWords"
             android:maxLength="25"
-            android:singleLine="true">
+            android:singleLine="true"
+            android:textColor="@color/white">
 
             <requestFocus />
         </com.google.android.material.textfield.TextInputEditText>

@@ -12,7 +12,7 @@
     <string name="is_state">%1$s — государство %2$s</string>
     <string name="missing_stars">Не хватает %1$d ★</string>
     <string name="no">Нет</string>
-    <string name="once_again">ЕЩЁ РАЗ</string>
+    <string name="improve_result">УЛУЧШИТЬ РЕЗУЛЬТАТ</string>
     <string name="purpose_message">Основная цель игры — набрать как можно больше ★.
         Если у вас достаточно ★, то вы можете получить подсказку, нажав на изображение лампы.
         После каждой вашей победы уровень робота возрастает.
@@ -35,4 +35,5 @@
     <string name="yes">Да</string>
     <string name="you_won">ВЫ ПОБЕДИЛИ</string>
     <string name="zero">0</string>
+    <string name="background">Фон</string>
 </resources>

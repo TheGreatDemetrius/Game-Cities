@@ -2,7 +2,6 @@
 <resources>
     <color name="white">#F0F0F0</color>
     <color name="lightGray">#429B9FA3</color>
-    <color name="darkGray">#444</color>
     <color name="blue">#609BEB</color>
     <color name="darkBlue">#337FE5</color>
     <color name="orange">#FFAD26</color>

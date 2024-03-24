@@ -38,6 +38,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import ru.cities.game.R;
 import ru.cities.game.adapter.City;
@@ -67,7 +68,7 @@ public class MainFragment extends Fragment {
     private TextInputEditText etText;
     private TextInputLayout lText;
     private TextView tvScore, tvTimer;
-    private ImageView ivGetHint;
+    private ImageView ivGetHint, ivBackground;
     private RecyclerView rvList;
     private City botCity;
     private CityAdapter adapter;
@@ -77,6 +78,9 @@ public class MainFragment extends Fragment {
     private Intent mSpeechRecognizerIntent;
     private AlertDialog alertDialog;
     private MediaPlayer mediaPlayer;
+
+    private final static int[] backgrounds = {R.drawable.australia, R.drawable.paris, R.drawable.japan, R.drawable.egypt, R.drawable.new_york, R.drawable.london,
+            R.drawable.taiwan, R.drawable.canada, R.drawable.new_zealand, R.drawable.rome, R.drawable.bangkok, R.drawable.india};
 
     public MainFragment() {
         super(R.layout.main_fragment);
@@ -89,6 +93,7 @@ public class MainFragment extends Fragment {
         tvScore = view.findViewById(R.id.tv_score);
         tvTimer = view.findViewById(R.id.tv_timer);
         ivGetHint = view.findViewById(R.id.iv_get_hint);
+        ivBackground = view.findViewById(R.id.iv_background);
         lText = view.findViewById(R.id.l_text_name);
         rvList = view.findViewById(R.id.rv_list);
         adapter = new CityAdapter(city -> showMessage(databaseHelper.getCityInfo(city)));
@@ -223,6 +228,7 @@ public class MainFragment extends Fragment {
         initClickListeners();
         initTimer();
         timer.start();
+        ivBackground.setImageResource(backgrounds[new Random().nextInt(12)]);
     }
 
     @Override
@@ -231,7 +237,7 @@ public class MainFragment extends Fragment {
             speechRecognizer.cancel();
         if (!isNull(textToSpeech))
             textToSpeech.stop();
-        if(!isNull(mediaPlayer))
+        if (!isNull(mediaPlayer))
             mediaPlayer.release();
         super.onPause();
     }
@@ -240,7 +246,7 @@ public class MainFragment extends Fragment {
     public void onDestroy() {
         timer.cancel();
         databaseHelper.close();
-        if(!isNull(mediaPlayer))
+        if (!isNull(mediaPlayer))
             mediaPlayer.release();
         super.onDestroy();
     }
@@ -395,7 +401,7 @@ public class MainFragment extends Fragment {
                     .setTitle(getString(R.string.using_hint))
                     .setMessage(getString(R.string.spend_stars_on_hint, booster))
                     .setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
-                        if (score >= booster) {//checking whether the user has enough points
+                        if (score >= booster) {
                             score -= booster;
                             tvScore.setText(String.valueOf(score));
                             botCity.setType(false);
