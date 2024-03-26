@@ -61,7 +61,7 @@ public class MainFragment extends Fragment {
     private int score = 0;
     private int booster = 1;
     private int increase = 0;
-    private boolean lampOff = true;
+    private boolean lampOff = true, isListening = false;
     private SharedPreferences prefs;
     private CountDownTimer timer;
     private Context context;
@@ -122,19 +122,22 @@ public class MainFragment extends Fragment {
             else if (isNull(speechRecognizer)) {
                 initSpeechRecognizer();
                 startListening();
-            } else startListening();
+            } else if (isListening)
+                speechRecognizer.cancel();
+            else
+                startListening();
         }
     };
 
     private void startListening() {
+        isListening = true;
         lText.setEndIconDrawable(R.drawable.ic_mic_on);
         speechRecognizer.startListening(mSpeechRecognizerIntent);
     }
 
     private void initSpeechRecognizer() {
         mSpeechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ru-RU");
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
@@ -155,25 +158,26 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onEndOfSpeech() {
+                isListening = false;
                 lText.setEndIconDrawable(R.drawable.ic_mic_off);
             }
 
             @Override
             public void onError(int error) {
+                isListening = false;
                 lText.setEndIconDrawable(R.drawable.ic_mic_off);
             }
 
             @Override
             public void onResults(Bundle results) {
                 ArrayList<String> result = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-                if (!isNull(result)) {
-                    String text = result.get(0);
-                    if (text.length() < 26) {
-                        etText.setText(text);
-                        etText.setSelection(text.length());
-                        checkInput();
-                    } else showMessage(getString(R.string.speech_recognition_error));
-                }
+                if (isNull(result)) return;
+                String text = result.get(0);
+                if (text.length() < 26) {
+                    etText.setText(text);
+                    etText.setSelection(text.length());
+                    checkInput();
+                } else showMessage(getString(R.string.speech_recognition_error));
             }
 
             @Override
