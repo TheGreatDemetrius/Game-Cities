@@ -311,7 +311,7 @@ public class MainFragment extends Fragment {
         char first = text.charAt(0),
                 last = text.charAt(text.length() - 1);
         if (first == 'ё' || first == 'ë' ||
-                first == 'ь' || first == 'ы' ||
+                first == 'ъ' || first == 'ы' || first == 'ь' ||
                 first == '-' || last == '-')
             return null;
         return text.substring(0, 1).toUpperCase() + text.substring(1);
